@@ -27,19 +27,29 @@ public class LinkController {
     String createLink(@RequestBody Link link) {
         return "Created link: " + linkRepository.save(link);
     }
+
     @DeleteMapping("/links/{id}")
-    void deleteLink(@PathVariable Long id){
+    void deleteLink(@PathVariable Long id) {
         linkRepository.deleteById(id);
     }
+
     @PutMapping("/links/{id}")
-    String updateLink(@RequestBody Link link,@PathVariable Long id){ // replacing
+    String updateLink(@RequestBody Link link, @PathVariable Long id) { // replacing
         Link updatedLink = linkRepository.findById(id)
                 .map(updated -> {
 //                        updated.setId(link.getId()); //already set when found
-                        updated.setUrl(link.getUrl());
-                        updated.setFile(link.getFile());
-                        return linkRepository.save(updated);})
+                    updated.setUrl(link.getUrl());
+                    updated.setFile(link.getFile());
+                    return linkRepository.save(updated);
+                })
                 .orElseThrow(() -> new LinkNotFoundException(id));
         return "Updated link: " + updatedLink;
     }
+
+    @GetMapping("/links/files/{file}")
+    Link getByFile(@PathVariable String file) {
+        return linkRepository.findByFile(file).orElseThrow(
+                () -> new RuntimeException(String.format("Filename \s not found", file))); //Exception should be customised
+    }
+
 }

@@ -9,7 +9,18 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+//@Table
 public class Link {
+    //    @Id
+    //    @SequenceGenerator(
+    //            name = "link_sequence",
+    //            sequenceName = "link_sequence",
+    //            allocationSize = 1
+    //    )
+    //    @GeneratedValue(
+    //            strategy = GenerationType.SEQUENCE,
+    //            generator = "link_sequence"
+    //    )
     @Id
     @GeneratedValue
     private Long id;
@@ -17,6 +28,7 @@ public class Link {
     private LocalDateTime created;
     private String url;
     private String file;
+    //@Transient // marking the field not needed to be stored (when virtual, calculated)
 
     public Link() { }
 

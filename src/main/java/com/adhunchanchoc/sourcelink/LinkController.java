@@ -52,4 +52,24 @@ public class LinkController {
                 () -> new RuntimeException(String.format("Filename \s not found", file))); //Exception should be customised
     }
 
+    @GetMapping("/links/convert") //use ?url= to append request parameter
+    String getConvertedUrl(@RequestParam String url){
+        linkRepository.save(new Link(url,makeUrlCompatible(url)));
+        // save into database
+        return makeUrlCompatible(url);
+//        return java.net.URLDecoder.decode(url, StandardCharsets.UTF_8); //equals sign at the end means, that instead of the contentType it is received as dataType
+//        return makeUrlCompatible(url);
+    }
+    //helper method to generate filename appendix
+    static String makeUrlCompatible(String url) {
+        final int MAX_LENGTH = 140;
+        int prefix = 0, length = url.length();
+
+        prefix += (url.contains("https://")) ? 8 : 7; //scheme
+        prefix += (url.contains("/www")) ? 4 : 0;
+        length -= prefix;
+        length = (length > MAX_LENGTH) ?  140 : length;
+        return url.substring(prefix, length+prefix).replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+    }
+
 }

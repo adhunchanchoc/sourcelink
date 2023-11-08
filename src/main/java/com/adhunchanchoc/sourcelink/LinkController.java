@@ -1,5 +1,6 @@
 package com.adhunchanchoc.sourcelink;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,10 +55,11 @@ public class LinkController {
                 () -> new RuntimeException(String.format("Filename \s not found", file))); //Exception should be customised
     }
 
-    @GetMapping("/links/convert")
-        //use ?url= to append request parameter
-    String getConvertedUrl(@RequestParam String url) {
-//        System.out.println("Input URL: "+url);
+    @GetMapping("/links/convert/**")
+    String getConvertedUrl(HttpServletRequest request) {
+        String fullRequestPath = request.getRequestURI(); //TODO null case
+        String url = fullRequestPath.split("/convert/")[1];
+        System.out.println("Input URL: "+url);
         // save to database
         linkRepository.save(new Link(url, linkService.makeUrlCompatible(url)));
         return linkService.makeUrlCompatible(url);

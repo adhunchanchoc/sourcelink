@@ -27,8 +27,8 @@ class LinkServiceTest {
         output = "docs.spring.io_spring-framework_reference_web_webmvc_mvc-controller_ann-requestmapping.html";
         Assertions.assertEquals(output, ls.makeUrlCompatible(url));
     }
-    @Test
-    void shouldTrimNextParameters() {
+    @Test // parts after ampersand symbol should be returned
+    void shouldNotTrimNextParameters() {
         url = "https://www.google.com/search?q=SEARCHED+WORD&sca_esv=580414175&ei=mFRLZfqEIs2M9u8P1qyRkAk&ved=0ahUKEwj6sNOci7SCAxVNhv0HHVZWBJIQ4dUDCBA&uact=5&oq=SEARCHED+WORD&gs_lp=Egxnd3Mtd2l6LXNlcnAiDVNFQVJDSEVEIFdPUkQyBRAAGIAEMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeSJ2MAVDkEliMgwFwAngCkAEAmAFwoAGyCKoBBDEyLjG4AQPIAQD4AQHCAgQQABhHwgIKEAAYRxjWBBiwA8ICERAuGIAEGLEDGIMBGMcBGNEDwgILEAAYgAQYsQMYgwHCAgsQABiKBRixAxiDAcICCxAuGIAEGMcBGNEDwgIgEC4YgAQYsQMYgwEYxwEY0QMYlwUY3AQY3gQY4ATYAQHCAggQABiABBixA8ICCxAuGIAEGLEDGIMBwgIFEC4YgATCAg4QLhiABBixAxjHARjRA8ICCBAuGIAEGLEDwgILEC4YgAQYxwEYrwHCAgcQABiABBgKwgIKEAAYgAQYsQMYCsICBxAuGIAEGArCAhQQLhiABBiXBRjcBBjeBBjgBNgBAcICDRAAGIAEGLEDGIMBGArCAhYQLhiABBgKGJcFGNwEGN4EGOAE2AEBwgIKEAAYFhgeGA8YCsICCBAAGBYYHhgK4gMEGAAgQYgGAZAGCLoGBggBEAEYFA&sclient=gws-wiz-serp";
         output = "google.com_search_q_SEARCHED_WORD_sca_esv_580414175_ei_mFRLZfqEIs2M9u8P1qyRkAk_ved_0ahUKEwj6sNOci7SCAxVNhv0HHVZWBJIQ4dUDCBA_uact_5_oq_SEARCH";
         Assertions.assertEquals(output, ls.makeUrlCompatible(url));

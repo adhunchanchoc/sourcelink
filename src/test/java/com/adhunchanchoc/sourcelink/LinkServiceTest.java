@@ -1,20 +1,21 @@
 package com.adhunchanchoc.sourcelink;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@Slf4j
+import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 class LinkServiceTest {
     private String url;
     private String output;
-    @Autowired //field injection
-    private static LinkService ls;
-//    static final Logger log = Logger.getLogger(TestLifecycleLogger.class.getName()); //using java.util.Logger
+//  @Autowired private LinkService ls; // DI could be used only with @SpringBootTest annotation (not true Unit test)
+    private static final LinkService ls = new LinkService();
+    static final Logger log = LoggerFactory.getLogger(Config.class);
 
     @BeforeAll
     static void initAll(){
-            log.info("LinkServiceTest started");
+        log.info("LinkServiceTest started");
     }
 
     @BeforeEach
@@ -42,7 +43,7 @@ class LinkServiceTest {
     }
     @AfterAll
     static void tearDownAll() {
-        ls = null;
-        log.info("LinkServiceTest finished");
+//       ls = null;
+       log.info("LinkServiceTest finished");
     }
 }

@@ -14,10 +14,11 @@ class Config {
     @Bean
     public CommandLineRunner initialise(LinkRepository linkRepository){
         return args -> {
-            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam2.jpg") ));
-            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam3.jpg") ));
-            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam4.jpg") ));
-            log.info("Saving "+ linkRepository.save(new Link("https://validator.w3.org/","Valid XHTML 1.0.svg") ));
+            // mock data to populate database
+//            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam2.jpg") ));
+//            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam3.jpg") ));
+//            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam4.jpg") ));
+//            log.info("Saving "+ linkRepository.save(new Link("https://validator.w3.org/","Valid XHTML 1.0.svg") ));
         };
     }
 }

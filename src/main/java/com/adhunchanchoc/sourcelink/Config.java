@@ -14,7 +14,7 @@ class Config {
     @Bean
     public CommandLineRunner initialise(LinkRepository linkRepository){
         return args -> {
-            // mock data to populate database
+//             mock data to populate database
 //            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam2.jpg") ));
 //            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam3.jpg") ));
 //            log.info("Saving "+ linkRepository.save(new Link("https://www.fogcam.org/","fogcam4.jpg") ));

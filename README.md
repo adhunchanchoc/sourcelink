@@ -1,5 +1,5 @@
 # sourcelink
-<p><i>Simple REST application to preserve URL origin of local files</i></p><hr>
+<p><i>Simple REST application to preserve URL origin of local files.</i></p><hr>
 
 **[Features](#features)**<br>
 **[Technologies](#technologies)**<br>
@@ -17,6 +17,8 @@ Using JSON for data manipulation.
 ### Configuration
 The application in default configuration is listening on the localhost. Default Tomcat server port is 8080, so that you can interact with the application via localhost:8080.
 For persistent storage, it is required to set access to a database of choice.
+The database of the defined name must be created before the application starts (e.g. by CREATE DATABASE linkdb;).  
+<br>
 Application behavior can be modified by 1) creating/editing application.properties file located in the same folder as the .jar file. 2) The second approach is to run the jar with specific parameters. 3) The third way is by defining and editing certain environment variables.
 1. application.properties (see below for examples of DB configuration)
 <pre>
@@ -43,7 +45,6 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.datasource.url=jdbc:mysql://localhost:3306/linkdb
 spring.datasource.username=root
 spring.datasource.password=
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 </pre>
 ### Installation and launch
 As a Spring Boot project the application can be run in a standard way directly from command line 
@@ -60,8 +61,8 @@ Run directly using Maven wrapper:
 <code>./mvnw clean package</code><br>
 Build using Gradle wrapper and run jar package:
 <code>./mvnw clean package<br>
-java -jar target/sourcelink-0.0.1-SNAPSHOT.jar<br>
-</code>
+java -jar target/sourcelink-0.0.1-SNAPSHOT.jar</code><br>
+
 
 Application termination can be done easily by interrupting the command-line process, for example by <kbd>Ctrl</kbd>+<kbd>C</kbd>.
 
@@ -74,8 +75,8 @@ of the endpoint after the forward slash / character.
 <pre>
 curl -X GET http://localhost:8080/links
 curl -X DELETE http://localhost:8080/links/4
-curl -X POST http://localhost:8080/links -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"hashphrases.txt"}' | json
-curl -X PUT http://localhost:8080/links/3 -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"UPDATEDhashphrases.txt"}' | json
+curl -X POST http://localhost:8080/links -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"hashphrases.txt"}'
+curl -X PUT http://localhost:8080/links/3 -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"UPDATEDhashphrases.txt"}'
 </pre>
 
 [//]: # (* GET http://localhost:8080/links <br>)

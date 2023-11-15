@@ -67,22 +67,22 @@ java -jar target/sourcelink-0.0.1-SNAPSHOT.jar</code><br>
 Application termination can be done easily by interrupting the command-line process, for example by <kbd>Ctrl</kbd>+<kbd>C</kbd>.
 
 ### How to use
-By default, a running instance of the application is ready to use at http://localhost:8080/links (the aggregate root).
+By default, a running instance of the application is ready to use at http://localhost:8080/weblinks (the aggregate root).
 Different actions are performed by alternating request methods (POST, GET, PUT, DELETE) and by further specification
 of the endpoint after the forward slash / character.  
 
 #### Examples of requests in curl
 <pre>
-curl -X GET http://localhost:8080/links
-curl -X DELETE http://localhost:8080/links/4
-curl -X POST http://localhost:8080/links -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"hashphrases.txt"}'
-curl -X PUT http://localhost:8080/links/3 -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"UPDATEDhashphrases.txt"}'
+curl -X GET http://localhost:8080/weblinks
+curl -X DELETE http://localhost:8080/weblinks/4
+curl -X POST http://localhost:8080/weblinks -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"hashphrases.txt"}'
+curl -X PUT http://localhost:8080/weblinks/3 -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"UPDATEDhashphrases.txt"}'
 </pre>
 
-[//]: # (* GET http://localhost:8080/links <br>)
+[//]: # (* GET http://localhost:8080/weblinks <br>)
 
-[//]: # (When GET method is used, this request should return an empty field at start &#40;as there are no links saved&#41;,)
+[//]: # (When GET method is used, this request should return an empty field at start &#40;as there are no weblinks saved&#41;,)
 
-[//]: # (or the full list of stored links &#40;database fields represented as Link objects in JSON format&#41;.)
+[//]: # (or the full list of stored weblinks &#40;database fields represented as Link objects in JSON format&#41;.)
 
-[//]: # (* GET http://localhost:8080/links/3 <br> Returns a single link with the given index.)
+[//]: # (* GET http://localhost:8080/weblinks/3 <br> Returns a single weblink with the given index.)

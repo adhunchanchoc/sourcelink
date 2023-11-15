@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 //@Table
-public class Link {
+public class Weblink {
     //    @Id
     //    @SequenceGenerator(
     //            name = "link_sequence",
@@ -30,9 +30,9 @@ public class Link {
     private String file;
     //@Transient // marking the field not needed to be stored (when virtual, calculated)
 
-    public Link() { }
+    public Weblink() { }
 
-    public Link(String url, String file) {
+    public Weblink(String url, String file) {
         this.url = url;
         this.file = file;
     }
@@ -73,8 +73,8 @@ public class Link {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Link link = (Link) o;
-        return Objects.equals(id, link.id) && Objects.equals(url, link.url) && Objects.equals(file, link.file);
+        Weblink weblink = (Weblink) o;
+        return Objects.equals(id, weblink.id) && Objects.equals(url, weblink.url) && Objects.equals(file, weblink.file);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Link {
 
     @Override
     public String toString() {
-        return "Link{" +
+        return "Weblink{" +
                 "id=" + id +
                 ", created=" + created +
                 ", url='" + url + '\'' +

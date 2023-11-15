@@ -6,16 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-class LinkServiceTest {
+class WeblinkServiceTest {
     private String url;
     private String output;
 //  @Autowired private LinkService ls; // DI could be used only with @SpringBootTest annotation (not true Unit test)
     private static final LinkService ls = new LinkService();
-    static final Logger log = LoggerFactory.getLogger(Config.class);
+    private static final Logger log = LoggerFactory.getLogger(Config.class);
 
     @BeforeAll
     static void initAll(){
-        log.info("LinkServiceTest started");
+        log.info("WeblinkServiceTest started");
     }
 
     @BeforeEach
@@ -44,6 +44,6 @@ class LinkServiceTest {
     @AfterAll
     static void tearDownAll() {
 //       ls = null;
-       log.info("LinkServiceTest finished");
+       log.info("WeblinkServiceTest finished");
     }
 }

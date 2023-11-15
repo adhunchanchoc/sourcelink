@@ -1,56 +1,81 @@
 package com.adhunchanchoc.sourcelink;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class LinkController {
     private final LinkRepository linkRepository;
     private final LinkService linkService;
+    private final LinkModelAssembler linkModelAssembler;
 
-    public LinkController(LinkRepository linkRepository, LinkService linkService) {
+    public LinkController(LinkRepository linkRepository, LinkService linkService, LinkModelAssembler linkModelAssembler) {
         this.linkRepository = linkRepository;
         this.linkService = linkService;
+        this.linkModelAssembler = linkModelAssembler;
     }
 
     @GetMapping("/links/{id}")
-    Link getOne(@PathVariable Long id) {
-        Link link = linkRepository.findById(id).orElseThrow(() -> new LinkNotFoundException(id));
-        return link;
+    EntityModel<Weblink> getOne(@PathVariable Long id) {
+        Weblink weblink = linkRepository.findById(id).orElseThrow(() -> new LinkNotFoundException(id));
+        return linkModelAssembler.toModel(weblink);
     }
 
     @GetMapping("/links")
-    List<Link> getAll() {
-        return linkRepository.findAll();
+    CollectionModel<EntityModel<Weblink>> getAll() {
+        List<Weblink> weblinks = linkRepository.findAll();
+        CollectionModel<EntityModel<Weblink>> linkModels = CollectionModel.of(
+                weblinks.stream().map((link) -> linkModelAssembler.toModel(link)).collect(Collectors.toList()), //_embedded
+                linkTo(methodOn(LinkController.class).getAll()).withSelfRel(),                                  //_links
+                linkTo(LinkController.class).slash("help").withRel("GET_HELP")); //TODO static html help
+        return linkModels;
     }
-
+// POST will respond with HAL (link-enriched) object with link; could even return the created instance of webLink, which would be automatically converted to valid HTTP response with JSONized object
     @PostMapping("/links")
-    String createLink(@RequestBody Link link) {
-        return "Created link: " + linkRepository.save(link);
+    ResponseEntity<?> createLink(@RequestBody Weblink weblink) {
+        //TODO validation
+        linkRepository.save(weblink);
+        EntityModel<Weblink> linkModel = linkModelAssembler.toModel(weblink);
+        return ResponseEntity
+                .created(linkModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //include CREATED status and a Location header with URI
+                .body(linkModel);
     }
 
     @DeleteMapping("/links/{id}")
-    void deleteLink(@PathVariable Long id) {
+    ResponseEntity<?> deleteLink(@PathVariable Long id) {
         linkRepository.deleteById(id);
+        return ResponseEntity.noContent().build(); //204 Status code for No content
     }
 
     @PutMapping("/links/{id}")
-    String updateLink(@RequestBody Link link, @PathVariable Long id) { // replacing
-        Link updatedLink = linkRepository.findById(id)
+    ResponseEntity<?> updateLink(@RequestBody Weblink weblink, @PathVariable Long id) {
+//        replacing the initial Weblink with JSON data
+        Weblink updatedWeblink = linkRepository.findById(id)
                 .map(updated -> {
-//                        updated.setId(link.getId()); //unnecessary - already set when found
-                    updated.setUrl(link.getUrl());
-                    updated.setFile(link.getFile());
+//                        updated.setId(weblink.getId()); //unnecessary - already set when found
+                    updated.setUrl(weblink.getUrl());
+                    updated.setFile(weblink.getFile());
                     return linkRepository.save(updated);
                 })
                 .orElseThrow(() -> new LinkNotFoundException(id));
-        return "Updated link: " + updatedLink;
+        EntityModel<Weblink> linkModel= linkModelAssembler.toModel(updatedWeblink);
+        return ResponseEntity
+                .created(linkModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(linkModel);
     }
 
     @GetMapping("/links/files/{file}")
-    Link getByFile(@PathVariable String file) {
+    Weblink getByFile(@PathVariable String file) {
         return linkRepository.findByFile(file).orElseThrow(
                 () -> new RuntimeException(String.format("Filename \s not found", file))); //Exception should be customised
     }
@@ -59,9 +84,9 @@ public class LinkController {
     String getConvertedUrl(HttpServletRequest request) {
         String fullRequestPath = request.getRequestURI(); //TODO null case
         String url = fullRequestPath.split("/convert/")[1];
-        System.out.println("Input URL: "+url);
+        System.out.println("Input URL: " + url);
         // save to database
-        linkRepository.save(new Link(url, linkService.makeUrlCompatible(url)));
+        linkRepository.save(new Weblink(url, linkService.makeUrlCompatible(url)));
         return linkService.makeUrlCompatible(url);
 //        return java.net.URLDecoder.decode(url, StandardCharsets.UTF_8); //equals sign at the end means, that instead of the contentType it is received as dataType
     }

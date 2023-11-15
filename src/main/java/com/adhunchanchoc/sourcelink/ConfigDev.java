@@ -5,12 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 @Configuration
-class Config {
+@Profile("dev")
+class ConfigDev {
 
-    private static final Logger log = LoggerFactory.getLogger(Config.class); // logging repository initialisation
+    private static final Logger log = LoggerFactory.getLogger(ConfigDev.class); // logging repository initialisation
 
     @Bean
     public CommonsRequestLoggingFilter httpLoggingFilter() { // logging all HTTP requests (at the DEBUG level)

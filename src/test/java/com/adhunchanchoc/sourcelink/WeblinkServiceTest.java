@@ -11,7 +11,7 @@ class WeblinkServiceTest {
     private String output;
 //  @Autowired private LinkService ls; // DI could be used only with @SpringBootTest annotation (not true Unit test)
     private static final LinkService ls = new LinkService();
-    private static final Logger log = LoggerFactory.getLogger(Config.class);
+    private static final Logger log = LoggerFactory.getLogger(ConfigDev.class);
 
     @BeforeAll
     static void initAll(){

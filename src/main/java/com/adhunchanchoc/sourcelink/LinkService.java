@@ -1,9 +1,15 @@
 package com.adhunchanchoc.sourcelink;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LinkService {
+    private final LinkRepository repository;
+@Autowired
+    public LinkService(LinkRepository linkRepository){
+        this.repository = linkRepository;
+    }
 
     /**
      * Method for URL String conversion to a String fulfilling naming requirements of files across multiple operating systems.
@@ -24,4 +30,6 @@ public class LinkService {
         length = (length > MAX_LENGTH) ? 140 : length;
         return url.substring(prefix, length + prefix).replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
     }
+
+
 }

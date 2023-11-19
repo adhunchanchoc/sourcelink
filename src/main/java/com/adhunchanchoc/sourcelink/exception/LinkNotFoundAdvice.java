@@ -1,4 +1,4 @@
-package com.adhunchanchoc.sourcelink;
+package com.adhunchanchoc.sourcelink.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

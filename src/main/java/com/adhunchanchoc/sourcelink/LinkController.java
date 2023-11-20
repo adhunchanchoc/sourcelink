@@ -70,7 +70,7 @@ public class LinkController {
     @GetMapping("help")
     public String getHelp() {
         StringBuilder outputMD = new StringBuilder();
-        File readme = new File("README.MD");
+        File readme = new File("src/main/resources/static/README.MD");
 
         try {
             FileReader fr = new FileReader(readme);

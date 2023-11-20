@@ -1,11 +1,7 @@
-//package com.adhunchanchoc.sourcelink;
-//
-//import jakarta.servlet.http.HttpServletRequest;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//
-////Controller working with plaintext data (eventually converted to JSON) not with real "resources" in REST sense (Response Entities)
+package com.adhunchanchoc.sourcelink;
+
+// Controller working with plaintext data (eventually converted to JSON) not with real "resources" in REST sense (Response Entities)
+// Uses repository class directly, service class is used only for URL conversion
 //@RestController
 //public class LinkPlainController {
 //    private final LinkRepository linkRepository;
@@ -38,10 +34,9 @@
 //    }
 //
 //    @PutMapping("/links/{id}")
-//    String updateLink(@RequestBody Weblink link, @PathVariable Long id) { // replacing
+//    String updateLink(@RequestBody Weblink link, @PathVariable Long id) {
 //        Weblink updatedLink = linkRepository.findById(id)
 //                .map(updated -> {
-////                        updated.setId(link.getId()); //unnecessary - already set when found
 //                    updated.setUrl(link.getUrl());
 //                    updated.setFile(link.getFile());
 //                    return linkRepository.save(updated);
@@ -53,18 +48,15 @@
 //    @GetMapping("/links/files/{file}")
 //    Weblink getByFile(@PathVariable String file) {
 //        return linkRepository.findByFile(file).orElseThrow(
-//                () -> new RuntimeException(String.format("Filename \s not found", file))); //Exception should be customised
+//                () -> new RuntimeException(String.format("Filename \s not found", file)));
 //    }
 //
 //    @GetMapping("/links/convert/**")
 //    String getConvertedUrl(HttpServletRequest request) {
-//        String fullRequestPath = request.getRequestURI(); //TODO null case
+//        String fullRequestPath = request.getRequestURI();
 //        String url = fullRequestPath.split("/convert/")[1];
-//        System.out.println("Input URL: "+url);
-//        // save to database
 //        linkRepository.save(new Weblink(url, linkService.makeUrlCompatible(url)));
 //        return linkService.makeUrlCompatible(url);
-////        return java.net.URLDecoder.decode(url, StandardCharsets.UTF_8); //equals sign at the end means, that instead of the contentType it is received as dataType
 //    }
 //
 //}

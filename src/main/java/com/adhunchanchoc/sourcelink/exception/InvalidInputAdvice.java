@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class LinkNotFoundAdvice {
-    @ExceptionHandler(LinkNotFoundException.class)
+public class InvalidInputAdvice {
+
+    @ExceptionHandler(InvalidInputException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String linkNotFoundHandler(LinkNotFoundException e) {
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    String invalidInputHandler(InvalidInputException e) {
         return e.getMessage();
     }
 }

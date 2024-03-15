@@ -7,10 +7,7 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,12 +67,15 @@ public class LinkController {
     @GetMapping("help")
     public String getHelp() {
         StringBuilder outputMD = new StringBuilder();
-        File readme = new File("src/main/resources/static/README.MD");
+//        File readme = new File("README.MD");
+        try (InputStream is = getClass().getResourceAsStream("/README.MD"); //Thread.currentThread().getContextClassLoader()
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));)
+        {    br.lines().forEach(line -> outputMD.append(line + "\n"));
 
-        try {
-            FileReader fr = new FileReader(readme);
-            BufferedReader br = new BufferedReader(fr);
-            br.lines().forEach(line -> outputMD.append(line + "\n"));
+//        try {
+//            FileReader fr = new FileReader(readme);
+//            BufferedReader br = new BufferedReader(fr);
+//            br.lines().forEach(line -> outputMD.append(line + "\n"));
         } catch (IOException ioEx) {
             throw new RuntimeException("README.MD was not found");
         }

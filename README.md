@@ -15,7 +15,9 @@ REST Spring Boot Application with Spring Data JPA, Apache Tomcat, SLF4J Logger, 
 Different databases can be used (tested with PostgreSQL, MySQL, H2 in memory).
 Using JSON for data manipulation.
 ### Installation and launch
-As a common Spring Boot project the application can be run in a standard way directly from command line 
+For convenience, you can use <code>docker compose up</code> and <code>docker run</code> to spin up the app together with POSTGRES database.
+
+Otherwise, as a common Spring Boot project the application can be run in a standard way directly from command line 
 or using executable .jar file.
 * GRADLE:
 Run directly using Gradle wrapper:

@@ -15,26 +15,20 @@ REST Spring Boot Application with Spring Data JPA, Apache Tomcat, SLF4J Logger, 
 Different databases can be used (tested with PostgreSQL, MySQL, H2 in memory).
 Using JSON for data manipulation.
 ### Installation and launch
-For convenience, you can use <code>docker compose up</code> and <code>docker run</code> to spin up the app together with POSTGRES database.
-
-Otherwise, as a common Spring Boot project the application can be run in a standard way directly from command line 
-or using executable .jar file.
-* GRADLE:
-Run directly using Gradle wrapper:
-<code>./gradlew bootRun</code><br>
-Build using Gradle wrapper and run jar package:
-<code>./gradlew build<br>
-java -jar build/libs/sourcelink-0.0.1-SNAPSHOT.<br>
-</code><br>
-* MAVEN:
-Run directly using Maven wrapper:
+To build a .jar needed for deployment, you can use Maven or its wrapper in the following way.
 <code>./mvnw clean package</code><br>
-Build using Gradle wrapper and run jar package:
-<code>./mvnw clean package<br>
-java -jar target/sourcelink-0.0.1-SNAPSHOT.jar</code><br>
+
+A) Docker with PostgreSQL included
+* For convenience, you can use <code>docker compose up</code> to spin up the app together with PostgreSQL database.
+
+B) Standard Java execution with a custom database (described in the Configuration section below)
+* As a common Spring Boot project, the application can be run in a standard way directly from the command line/terminal 
+or using executable .jar file.
+<code>java -jar target/sourcelink-YOUR_VERSION.jar</code><br>
 
 
 Application termination can be done easily by interrupting the command-line process, for example by <kbd>Ctrl</kbd>+<kbd>C</kbd>.
+If you prefer the Docker way, you can use <code>docker compose stop</code> or <code>docker compose down</code> respectively.
 
 ### How to use
 By default, a running instance of the application is ready to use at http://localhost:8080/api/v1/links (the aggregate root).
@@ -58,19 +52,19 @@ curl -X POST http://localhost:8080/api/v1/links -H 'Content-type:application/jso
 curl -X PUT http://localhost:8080/api/v1/links/3 -H 'Content-type:application/json' -d '{"url":"https://www.securesite.com","file":"UPDATEDhashphrases.txt"}'
 </pre>
 ### Configuration
-The application in default configuration is listening on the localhost. Default Tomcat server port is 8080, so that you can interact with the application via localhost:8080.
+The application in the default configuration is listening on the localhost. Default Tomcat server port is 8080, so that you can interact with the application via localhost:8080.
 For persistent storage, it is required to set access to a database of choice.
 The database of the defined name and type must exist before the application starts (if not, use: CREATE DATABASE yourDBname;).  
 <br>
 Application behavior can be modified by 1) creating/editing application.properties file located in the same folder as the .jar file. 2) The second approach is to run the jar with specific parameters. 3) The third way is by defining and editing certain environment variables.
 1. application.properties (see below for examples of DB configuration)
 <pre>
-spring.datasource.url=jdbc:postgresql://localhost:5432/sampleDBname
+spring.datasource.url=jdbc:postgresql://localhost:5432/YOUR_DB_NAME
 spring.datasource.username=foouser
 spring.datasource.password=barpassword
 </pre>
 2. commandline parameters
-<pre> java -jar sourcelink-0.0.1-snapshot.jar --spring.datasource.url=jdbc:h2:mem:testdb --server.address=127.0.0.1 --server.port=8085</pre>
+<pre> java -jar sourcelink-YOUR_VERSION.jar --spring.datasource.url=jdbc:h2:mem:testdb --server.address=127.0.0.1 --server.port=8085</pre>
 3. environment variables (not implemented yet - coming in future releases)
 <pre>
 SPRING_CONFIG_NAME

@@ -68,7 +68,7 @@ public class LinkController {
     public String getHelp() {
         StringBuilder outputMD = new StringBuilder();
 //        File readme = new File("README.MD");
-        try (InputStream is = getClass().getResourceAsStream("/README.MD"); //Thread.currentThread().getContextClassLoader()
+        try (InputStream is = getClass().getResourceAsStream("/README.md"); //Thread.currentThread().getContextClassLoader()
             BufferedReader br = new BufferedReader(new InputStreamReader(is));)
         {    br.lines().forEach(line -> outputMD.append(line + "\n"));
 
@@ -77,7 +77,7 @@ public class LinkController {
 //            BufferedReader br = new BufferedReader(fr);
 //            br.lines().forEach(line -> outputMD.append(line + "\n"));
         } catch (IOException ioEx) {
-            throw new RuntimeException("README.MD was not found");
+            throw new RuntimeException("README.md was not found");
         }
         return linkService.markdownToHtml(outputMD.toString());
     }
